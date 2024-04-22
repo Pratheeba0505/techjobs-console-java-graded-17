@@ -31,7 +31,7 @@ public class TechJobs {
         while (true) {
 
             String actionChoice = getUserSelection("View jobs by (type 'x' to quit):", actionChoices);
-
+            //System.out.println("\n");
             if (actionChoice == null) {
                 break;
             } else if (actionChoice.equals("list")) {
@@ -61,8 +61,9 @@ public class TechJobs {
                 System.out.println("\nSearch term:");
                 String searchTerm = in.nextLine();
 
-                if (searchField.equals("all")) {
-                    printJobs(JobData.findByValue(searchTerm));
+                //System.out.println("\n");
+                if (searchField.equals("all")  && searchTerm.equals("")) {
+                    printJobs(JobData.findAll());
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -119,7 +120,29 @@ public class TechJobs {
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        if (someJobs.size() == 0) {
+            System.out.print("No Results");
 
-        System.out.println("printJobs is not implemented yet");
+        } else {
+            for (int i = 0; i < someJobs.size(); i++) {
+                // String job = "";
+                System.out.println("");
+                System.out.println("*****");
+
+                for (HashMap.Entry<String, String> entry : someJobs.get(i).entrySet()) {
+                    String key = entry.getKey();
+                    Object value = entry.getValue();
+                    // job = job + " " + value;
+                    System.out.println(key + ": " + value);
+                }
+                // if (job.contains("Ruby")) {
+                // System.out.println(job);
+                System.out.println("*****");
+            }
+            // }
+        }
+        //else {
+
+       //0 System.out.println("printJobs is not implemented yet");
     }
 }

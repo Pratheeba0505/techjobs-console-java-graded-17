@@ -71,15 +71,34 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) {
+        value = value.toLowerCase();
 
-            String aValue = row.get(column);
+        if (column.equals("all")) {
+            for(int i = 0; i <allJobs.size(); i++) {
+                String job = "";
+                for (HashMap.Entry<String, String> entry : allJobs.get(i).entrySet()) {
+                    Object cell_val = entry.getValue();
+                    job = job + " " + cell_val;
+                }
+                job = job.toLowerCase();
 
-            if (aValue.contains(value)) {
-                jobs.add(row);
+                if (job.contains(value)) {
+                    jobs.add(allJobs.get(i));
+                }
+            }
+            return jobs;
+
+        } else {
+            for (HashMap<String, String> row : allJobs) {
+
+                String aValue = row.get(column);
+                aValue = aValue.toLowerCase();
+
+                if (aValue.contains(value)) {
+                    jobs.add(row);
+                }
             }
         }
-
         return jobs;
     }
 
@@ -89,13 +108,24 @@ public class JobData {
      * @param value The search term to look for
      * @return      List of all jobs with at least one field containing the value
      */
-    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+    public static ArrayList<HashMap<String, String>> searchByColumnsAndValue  (String value) {
 
         // load data, if not already loaded
         loadData();
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        for (HashMap<String, String> row : allJobs) {
+
+            String column = null;
+            String aValue = row.get(column);
+
+            if (aValue.contains(value)) {
+                jobs.add(row);
+            }
+        }
 
         // TODO - implement this method
-        return null;
+        return  jobs;
+
     }
 
     /**
